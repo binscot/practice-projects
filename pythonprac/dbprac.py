@@ -19,3 +19,5 @@ db.users.update_one({'name':'bobby'},{'$set':{'age':19}})
 
 # 지우기 - 예시
 db.users.delete_one({'name':'bobby'})
+
+db.users.delete_one({'name':'bobby'})
