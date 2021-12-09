@@ -65,10 +65,11 @@
             function postArticle() {
                 let url = $('#post-url').val()
                 let comment = $('#post-comment').val()
+
                 $.ajax({
                     type: "POST",
                     url: "/memo",
-                    data: {url_give:url, comment_give:comment},
+                    data: {url_give:url,comment_give:comment},
                     success: function (response) { // 성공하면
                         alert(response["msg"]);
                         window.location.reload()
@@ -79,16 +80,16 @@
             function showArticles() {
                 $.ajax({
                     type: "GET",
-                    url: "/memo",
+                    url: "/memo?sample_give=샘플데이터",
                     data: {},
                     success: function (response) {
-                        let articles = response['all_articles']
-                        for(i=0; i < articles.length; i++){
-                            let title = articles[i]['title']
-                            let image = articles[i]['image']
-                            let desc = articles[i]['desc']
-                            let comment = articles[i]['comment']
-                            let url = articles[i]['url']
+                        let aticles = response['all_articles']
+                        for (i=0;i<aticles.length;i++){
+                            let title = aticles[i]['title']
+                            let desc = aticles[i]['desc']
+                            let image = aticles[i]['image']
+                            let url = aticles[i]['url']
+                            let comment = aticles[i]['comment']
 
                             let temp_html = `<div class="card">
                                                 <img class="card-img-top"
@@ -102,7 +103,9 @@
                                             </div>`
 
                             $('#cards-box').append(temp_html)
+
                         }
+
                     }
                 })
             }
