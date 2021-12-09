@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <title>스파르타코딩클럽 | 부트스트랩 연습하기</title>
+    <style>
+        .wrap{
+            width: 500px;
+            margin: auto;
+
+        }
+        .img{
+
+            width: 300px;
+            height: 300px;
+            background-image: url("https://search.pstatic.net/common/?src=https%3A%2F%2Fshopping-phinf.pstatic.net%2Fmain_8252067%2F82520675909.2.jpg&type=a340");
+            margin: auto;
+        }
+        .btn{
+            width: 100px;
+            display: block;
+            margin: auto;
+        }
+        .rate {
+            color: blue;
+        }
+
+        .table{
+            margin-top: 30px;
+        }
+    </style>
+    <script>
+      $(document).ready(function () {
+          q1();
+          show_Order();
+      });
+
+      function q1() {
+        $.ajax({
+                type: "GET",
+                url: "http://spartacodingclub.shop/sparta_api/rate",
+                data: {},
+                success: function (response) {
+                    let rate = response['rate']
+
+                    let temp_html = `<p>달러-원 환율 : ${rate}</p>`
+                    $('#now-rate').append(temp_html);
+                }
+            })
+      }
+
+      function make_Order() {
+
+          let name = $('#name').val()
+          let count = $('#count').val()
+          let address = $('#address').val()
+          let phone = $('#phone').val()
+
+          $.ajax({
+              type: "POST",
+              url: "/order",
+              data: {name_give:name,count_give:count,address_give:address,phone_give:phone},
+              success: function (response) {
+                  alert(response["msg"]);
+                  window.location.reload();
+              }
+          })
+      }
+
+            function show_Order() {
+                $.ajax({
+                    type: "GET",
+                    url: "/order",
+                    data: {},
+                    success: function (response) {
+                        let orders = response['all_orders']
+                        for (i = 0; i < orders.length; i++){
+                            let name = orders[i]['name']
+                            let count = orders[i]['count']
+                            let address = orders[i]['address']
+                            let phone = orders[i]['phone']
+
+                            let temp_html =`<tr>
+                                                <th scope="row">${name}</th>
+                                                <td>${count}</td>
+                                                <td>${address}</td>
+                                                <td>${phone}</td>
+                                            </tr>`
+
+                            $('#orders-box').append(temp_html)
+
+                        }
+                    }
+                })
+            }
+
+    </script>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="img"></div>
+        <div>
+
+            <h1>맥북에어 m1 <span style="font-size: 20px"> 가격:150만원/개</span></h1>
+            <p>화면크기 : 33.78cm(13.3인치) 무게 : 1.29 운영체제 : macOS Big Sur CPU : M1 칩셋 제조사 : 애플 코어종류 : 옥타코어 CPU속도 : 3.2GHz 램 : 8GB 해상도 : 2560x1440(WQHD)</p>
+        </div>
+        <div class="rate" id="now-rate">
+
+        </div>
+        <div>
+            <div class="input-group mb-3" >
+                <div class="input-group-prepend" >
+                    <span class="input-group-text" >주문자 이름</span>
+                </div>
+                <input type="text" id="name" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="count">수량</label>
+              </div>
+              <select class="custom-select" id="count">
+                <option selected>--수량을 선택하세요--</option>
+                <option value="1">1개</option>
+                <option value="2">2개</option>
+                <option value="3">3개</option>
+              </select>
+            </div>
+            <div class="input-group mb-3"  >
+                <div class="input-group-prepend">
+                    <span class="input-group-text" >주소</span>
+                </div>
+                <input id="address" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" >전화번호</span>
+                </div>
+                <input type="text" id="phone" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <button type="button" onclick="make_Order()" class="btn btn-primary">주문하기</button>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">이름</th>
+                <th scope="col">수량</th>
+                <th scope="col">주소</th>
+                <th scope="col">전화번호</th>
+            </tr>
+            </thead>
+            <tbody id="orders-box">
+
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
