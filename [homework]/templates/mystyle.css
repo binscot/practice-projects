@@ -1,3 +1,8 @@
+        *{
+            font-family: 'Jua', sans-serif;
+            font-family: 'Nanum Gothic', sans-serif;
+            font-family: 'Sunflower', sans-serif;
+        }
         .wrap{
             width: 500px;
             margin: auto;
