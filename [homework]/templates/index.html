@@ -38,7 +38,7 @@
                 success: function (response) {
                     let rate = response['rate']
 
-                    let temp_html = `<p>달러-원 환율 : ${rate}</p>`
+                    let temp_html = `<p>환율 / 1달러 : ${rate}원</p>`
                     $('#now-rate').append(temp_html);
                 }
             })
