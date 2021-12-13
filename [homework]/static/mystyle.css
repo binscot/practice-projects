@@ -11,8 +11,9 @@
         .img{
 
             width: 500px;
-            height: 300px;
+            height: 500px;
             background-image: url("https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/macbook-pro-13-og-202011?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1604347427000");
+            background-size: 100% 100%;
             margin: auto;
         }
         .btn{
